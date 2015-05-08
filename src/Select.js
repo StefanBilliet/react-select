@@ -602,7 +602,22 @@ var Select = React.createClass({
 				mouseLeave = this.unfocusOption.bind(this, op),
 				mouseDown = this.selectValue.bind(this, op);
 
-			return <div ref={ref} key={'option-' + op.value} className={optionClass} onMouseEnter={mouseEnter} onMouseLeave={mouseLeave} onMouseDown={mouseDown} onClick={mouseDown}>{op.label}</div>;
+			var props = {
+				ref: ref,
+				key: 'option-' + op.value,
+				className: optionClass,
+				onMouseEnter: mouseEnter,
+				onMouseLeave: mouseLeave
+			}
+
+			if (this.props.multi) {
+				props.onMouseDown = mouseDown;
+			} else {
+				props.onClick = mouseDown;
+			}
+
+
+			return <div {...props}>{op.label}</div>;
 
 		}, this);
 
